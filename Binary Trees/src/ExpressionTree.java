@@ -1,35 +1,39 @@
 
 public class ExpressionTree {
 
-	ExpressionTree(){
+	ExpressionTree() {
 		super();
 	}
-	
+
 	public ExpressionTree buildTree(String[] postfix) {
-		
+
 		return new ExpressionTree();
 	}
-	
-	public int evalTree(ExpressionTree e) {
-		return 0;
+
+	public int evalTree(TreeNode root) {
+		TreeNode a =  traverseTree(root);
+		TreeNode b =  traverseTree(root);
+		return evalTree(a) * evalTree(b)
 	}
-	
-	public String toPrefixNotation() {
-		
+
+	public String toPrefixNotation(TreeNode root) {
+
 	}
-	
-	public String toInfixNotation() {
-		
+
+	public String toInfixNotation(TreeNode root) {
+
 	}
-	
-	public String toPostfixNotation() {
-		
+
+	public String toPostfixNotation(TreeNode root) {
+
 	}
-	
-	public int postfixEval() {
-		
+
+	public int postfixEval(String[] postfix) {
+
 	}
-	
-	
-	
+
+	public TreeNode traverseTree(TreeNode root) {
+		// traverse tree and returns root
+	}
+
 }
