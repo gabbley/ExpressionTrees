@@ -10,14 +10,14 @@ public class ExpressionTree {
 	}
 
 	public ExpressionTree buildTree(String[] postfix) {
-		
+
 		Stack<Object> exp = new Stack<Object>();
-		for (int i = 0; i<postfix.length; i++){
-			ifOperator(postfix[i]){
+		for (int i = 0; i < postfix.length; i++) {
+			if (isOperator(postfix[i])) {
 				exp.push(postfix[i]);
 			}
 		}
-		
+
 		return new ExpressionTree();
 	}
 
@@ -37,19 +37,19 @@ public class ExpressionTree {
 			toPrefixNotation(root.getLeft());
 			toPrefixNotation(root.getRight());
 		}
-		return finalRoot.toString(); //this isnt' right!
+		return finalRoot.toString(); // this isnt' right!
 	}
 
 	public String toInfixNotation(TreeNode root) {
 		// traverse tree and returns root
-		TreeNode finalRoot = root;
+		String finalRoot = root;
 		// Base case: root == null, the tree is empty, do nothing
 		if (root != null) {
 			finalRoot = toInfixNotation(root.getLeft());
 			process(root.getValue());
-			traverseInorder(root.getRight());
+			toInfixNotation(root.getRight());
 		}
-		return finalRoot;
+		return finalRoot.toString(); // haha what
 	}
 
 	public String toPostfixNotation(TreeNode root) {
@@ -59,17 +59,19 @@ public class ExpressionTree {
 		if (root != null) {
 			toPostfixNotation(root.getLeft());
 			toPostfixNotation(root.getRight());
-			process(root.getValue());
+			process(root);
 		}
-		return finalRoot.toString(); //look at thsi again lol
+		return finalRoot.toString(); // look at thsi again lol
 	}
 
 	public int postfixEval(String[] postfix) {
-		Stack<Object> exp = new Stack<Object>();
-		for (int i = 0; i<postfix.length; i++){
-			ifOperator(postfix[i]){
+		Stack<String> exp = new Stack<String>();
+		for (int i = 0; i < postfix.length; i++) {
+			if (isOperator(postfix[i])) {
 				exp.push(postfix[i]);
-			}
+			} else
+				exp.pop();
+			//call performOperation at some point
 		}
 	}
 
@@ -79,51 +81,29 @@ public class ExpressionTree {
 		// Base case: root == null, the tree is empty, do nothing
 		if (root != null) {
 			finalRoot = process(root.getValue());
-			traversePreorder(root.getLeft());
-			traversePreorder(root.getRight());
+			traverseTree(root.getLeft());
+			traverseTree(root.getRight());
 		}
 		return finalRoot;
 	}
 
-	public boolean ifOperator(String s) {
+	public boolean isOperator(String s) {
 		return (s.equals("+") || s.equals("*"));
-	}
-
-	// CODE FROM BOOK HERE FOR REFERENCE
-	private void traversePreorder(TreeNode root) {
-		TreeNode finalRoot;
-		// Base case: root == null, the tree is empty, do nothing
-		if (root != null) {
-			process(root.getValue());
-			traversePreorder(root.getLeft());
-			traversePreorder(root.getRight());
-		}
-
-	}
-
-	private void traversePostorder(TreeNode root) {
-		// Base case: root == null, the tree is empty, do nothing
-		if (root != null) {
-			traversePostorder(root.getLeft());
-			traversePostorder(root.getRight());
-			process(root.getValue());
-		}
-
-	}
-
-	private void traverseInorder(TreeNode root) {
-		// Base case: root == null, the tree is empty, do nothing
-		if (root != null) {
-			traverseInorder(root.getLeft());
-			process(root.getValue());
-			traverseInorder(root.getRight());
-		}
-
 	}
 
 	private TreeNode process(Object n) {
 		// what the heck is this? check book boi
 		return new TreeNode(n);
+	}
+
+	private int performOperation(int a, int b, String operator) {
+		switch (operator) {
+		case "*":
+			return a * b;
+		case "+":
+			return a + b;
+		}
+
 	}
 
 }
