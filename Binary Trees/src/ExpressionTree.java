@@ -24,7 +24,7 @@ public class ExpressionTree {
 
 		}
 
-		return operator;
+		return exp.pop();
 	}
 
 	private int evalTree(TreeNode root) {
