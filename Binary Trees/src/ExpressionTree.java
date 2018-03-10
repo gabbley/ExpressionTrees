@@ -9,8 +9,7 @@ public class ExpressionTree {
 		super();
 	}
 
-	private TreeNode buildTree(String[] postfix) { // returns a treenode does
-													// that count as a tree
+	private TreeNode buildTree(String[] postfix) {
 
 		Stack<TreeNode> exp = new Stack<TreeNode>();
 		ExpressionTree tree = new ExpressionTree();
@@ -28,11 +27,16 @@ public class ExpressionTree {
 	}
 
 	private int evalTree(TreeNode root) {
-		 if (root != null){
-			String rootString = root.toString();
-			isOperator(rootString);
-			performOperation(root.getLeft().getValue(), root.getRight().getValue(), rootString);
+		int evalNum = 0;
+		while (root != null) {
+			String rootString = root.getValue().toString();
+			if (isOperator(rootString))
+				evalNum = performOperation(evalTree(root.getLeft()), evalTree(root.getRight()), rootString);
+			else
+				evalNum = Integer.parseInt(rootString);
 		}
+		return evalNum;
+
 	}
 
 	private String toPrefixNotation(TreeNode root) {
@@ -49,7 +53,7 @@ public class ExpressionTree {
 
 	private String toInfixNotation(TreeNode root) {
 		// traverse tree and returns root
-		String finalRoot = root;
+		String finalRoot = root.getValue().toString;
 		// Base case: root == null, the tree is empty, do nothing
 		if (root != null) {
 			finalRoot = toInfixNotation(root.getLeft());
@@ -81,7 +85,6 @@ public class ExpressionTree {
 		}
 		return exp.pop();
 	}
-
 
 	private boolean isOperator(String s) {
 		return (s.equals("+") || s.equals("*"));
