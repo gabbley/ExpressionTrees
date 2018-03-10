@@ -28,11 +28,11 @@ public class ExpressionTree {
 	}
 
 	private int evalTree(TreeNode root) {
-		String operator = "";
-		TreeNode a = traverseTree(root); 
-		TreeNode b = traverseTree(root);
-		ifOperator(operator);
-		return performOperation(evalTree(a), evalTree(b), operator);
+		 if (root != null){
+			String rootString = root.toString();
+			isOperator(rootString);
+			performOperation(root.getLeft().getValue(), root.getRight().getValue(), rootString);
+		}
 	}
 
 	private String toPrefixNotation(TreeNode root) {
