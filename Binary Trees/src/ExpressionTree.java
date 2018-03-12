@@ -12,10 +12,9 @@ public class ExpressionTree {
 		super();
 	}
 
-	private TreeNode buildTree(String[] postfix) {
+	public TreeNode buildTree(String[] postfix) {
 
 		Stack<TreeNode> exp = new Stack<TreeNode>();
-		ExpressionTree tree = new ExpressionTree();
 		for (int i = 0; i < postfix.length; i++) {
 			if (!isOperator(postfix[i])) {
 				exp.push(new TreeNode(postfix[i]));
@@ -29,7 +28,7 @@ public class ExpressionTree {
 		return exp.pop();
 	}
 
-	private int evalTree(TreeNode root) {
+	public int evalTree(TreeNode root) {
 		int evalNum = 0;
 		while (root != null) {
 			String rootString = root.getValue().toString();
@@ -42,51 +41,49 @@ public class ExpressionTree {
 
 	}
 
-	private String toPrefixNotation(TreeNode root) {
-		// traverse tree and returns root
-		TreeNode finalRoot = root;
-		// Base case: root == null, the tree is empty, do nothing
+	public String toPrefixNotation(TreeNode root) {
+		String notation = "";
 		if (root != null) {
-			finalRoot = performOperation(root.getValue());
-			toPrefixNotation(root.getLeft());
-			toPrefixNotation(root.getRight());
+			notation += root.getValue().toString();
+			notation += toPrefixNotation(root.getLeft());
+			notation += toPrefixNotation(root.getRight());
 		}
-		return finalRoot.toString(); // this isnt' right!
+		return notation;
 	}
 
-	private String toInfixNotation(TreeNode root) {
-		// traverse tree and returns root
-		String finalRoot = root.getValue().toString();
-		// Base case: root == null, the tree is empty, do nothing
+	public String toInfixNotation(TreeNode root) {
+		String notation = "";
 		if (root != null) {
-			finalRoot = toInfixNotation(root.getLeft());
-			performOperation(root.getLeft(), evalTree(root.getRight()), evalTree(root.getValue()).toString());
-			toInfixNotation(root.getRight());
+			notation += toInfixNotation(root.getLeft());
+			notation += root.getValue().toString();
+			notation += toInfixNotation(root.getRight());
 		}
-		return finalRoot.toString(); // haha what
+		return notation;
 	}
 
-	private String toPostfixNotation(TreeNode root) {
-		// traverse tree and returns root
-		TreeNode finalRoot = root;
-		// Base case: root == null, the tree is empty, do nothing
+	public String toPostfixNotation(TreeNode root) {
+		String notation = "";
 		if (root != null) {
-			toPostfixNotation(root.getLeft());
-			toPostfixNotation(root.getRight());
-			performOperation(evalTree(root.getLeft()), evalTree(root.getRight()), root.getValue().toString());
+			notation += toPostfixNotation(root.getLeft());
+			notation += toPostfixNotation(root.getRight());
+			notation += root.getValue().toString();
 		}
-		return finalRoot.toString(); // look at thsi again lol
+		return notation;
 	}
 
-	private int postfixEval(String[] postfix) {
+	public int postfixEval(String[] postfix) {
 		Stack<Integer> exp = new Stack<Integer>();
 		for (int i = 0; i < postfix.length; i++) {
 			if (!isOperator(postfix[i])) {
 				exp.push(Integer.parseInt(postfix[i]));
-			} else
+			} else if (!exp.isEmpty())
 				exp.push(performOperation(exp.pop(), exp.pop(), postfix[i]));
+			else
+				throw new IllegalArgumentException();
 		}
-		return exp.pop();
+		int test = exp.pop();
+		System.out.println(test);
+		return test;
 	}
 
 	private boolean isOperator(String s) {
