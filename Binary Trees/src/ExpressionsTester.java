@@ -54,7 +54,7 @@ public class ExpressionsTester {
 			System.exit(1);
 		else{
 			while (in.hasNextLine()){
-				
+				String[] arr = in.nextLine().split(" ");
 			}
 		}
 			

@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.util.Stack;
 
 public class ExpressionTree {
-	
+
 	final String MULTSIGN = "*";
 	final String ADDSIGN = "+";
 
@@ -12,15 +12,13 @@ public class ExpressionTree {
 		super();
 	}
 
-
 	/**
 	 * Builds Expression tree from postfix expression
 	 * 
 	 * @param postfix
-	 * 	array of postfix expression
+	 *            array of postfix expression
 	 * 
-	 * @return TreeNode
-	 * 	built ExpressionTree
+	 * @return TreeNode built ExpressionTree
 	 */
 	public TreeNode buildTree(String[] postfix) {
 
@@ -38,15 +36,13 @@ public class ExpressionTree {
 		return exp.pop();
 	}
 
-
 	/**
 	 * Traverses through a tree and evaluates
 	 * 
 	 * @param root
-	 * 	Tree to be evaluated
+	 *            Tree to be evaluated
 	 * 
-	 * @return int
-	 * 	final value of the tree
+	 * @return int final value of the tree
 	 */
 	public int evalTree(TreeNode root) {
 		int evalNum = 0;
@@ -61,15 +57,13 @@ public class ExpressionTree {
 
 	}
 
-
 	/**
 	 * Converts ExpressionTree to prefix notation
 	 * 
 	 * @param root
-	 * 	ExpressionTree to be converted
+	 *            ExpressionTree to be converted
 	 * 
-	 * @return String
-	 * 	Tree in prefix notation
+	 * @return String Tree in prefix notation
 	 */
 	public String toPrefixNotation(TreeNode root) {
 		String notation = "";
@@ -85,29 +79,36 @@ public class ExpressionTree {
 	 * Converts ExpressionTree to infix notation
 	 * 
 	 * @param root
-	 * 	ExpressionTree to be converted
+	 *            ExpressionTree to be converted
 	 * 
-	 * @return String
-	 * 	Tree in infix notation
+	 * @return String Tree in infix notation
 	 */
 	public String toInfixNotation(TreeNode root) {
 		String notation = "";
 		if (root != null) {
-			notation += toInfixNotation(root.getLeft());
+			TreeNode leftRoot = root.getLeft();
+			if (leftRoot == null)
+				notation += "(" + toInfixNotation(root.getLeft());
+			else
+				notation += toInfixNotation(root.getLeft());
 			notation += root.getValue().toString();
-			notation += toInfixNotation(root.getRight());
+
+			TreeNode rightRoot = root.getRight();
+			if (rightRoot == null)
+				notation += toInfixNotation(root.getRight()) + ")";
+			else
+				notation += toInfixNotation(root.getRight());
 		}
 		return notation;
 	}
-	
+
 	/**
 	 * Converts ExpressionTree to postfix notation
 	 * 
 	 * @param root
-	 * 	ExpressionTree to be converted
+	 *            ExpressionTree to be converted
 	 * 
-	 * @return String
-	 * 	Tree in postfix notation
+	 * @return String Tree in postfix notation
 	 */
 	public String toPostfixNotation(TreeNode root) {
 		String notation = "";
@@ -123,10 +124,9 @@ public class ExpressionTree {
 	 * Evaluates a postfix expression
 	 * 
 	 * @param postfix
-	 * 	array of postfix expression
+	 *            array of postfix expression
 	 * 
-	 * @return int
-	 * 	final value of postfix expression
+	 * @return int final value of postfix expression
 	 */
 	public int postfixEval(String[] postfix) {
 		Stack<Integer> exp = new Stack<Integer>();
@@ -147,10 +147,9 @@ public class ExpressionTree {
 	 * Determines if String sent in is an operator
 	 * 
 	 * @param s
-	 * 	String, integer or an operator (+ or * only)
+	 *            String, integer or an operator (+ or * only)
 	 * 
-	 * @return boolean
-	 * 	true or false if an operator
+	 * @return boolean true or false if an operator
 	 */
 	private boolean isOperator(String s) {
 		return (s.equals(ADDSIGN) || s.equals(MULTSIGN));
@@ -160,16 +159,14 @@ public class ExpressionTree {
 	 * Performs specified operation
 	 * 
 	 * @param a
-	 * 	first value to be added or multiplied
+	 *            first value to be added or multiplied
 	 * 
 	 * @param b
-	 * 	second value to be added or multiplied
+	 *            second value to be added or multiplied
 	 * 
-	 * @operator
-	 * 	operator to specify operation
+	 * @operator operator to specify operation
 	 * 
-	 * @return int
-	 * 	value of operation performed
+	 * @return int value of operation performed
 	 */
 	private int performOperation(int a, int b, String operator) {
 		switch (operator) {
