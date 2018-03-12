@@ -4,6 +4,9 @@ import java.io.PrintWriter;
 import java.util.Stack;
 
 public class ExpressionTree {
+	
+	final String MULTSIGN = "*";
+	final String ADDSIGN = "+";
 
 	ExpressionTree() {
 		super();
@@ -53,11 +56,11 @@ public class ExpressionTree {
 
 	private String toInfixNotation(TreeNode root) {
 		// traverse tree and returns root
-		String finalRoot = root.getValue().toString;
+		String finalRoot = root.getValue().toString();
 		// Base case: root == null, the tree is empty, do nothing
 		if (root != null) {
 			finalRoot = toInfixNotation(root.getLeft());
-			performOperation(root.getValue()); // not right
+			performOperation(root.getLeft(), evalTree(root.getRight()), evalTree(root.getValue()).toString());
 			toInfixNotation(root.getRight());
 		}
 		return finalRoot.toString(); // haha what
@@ -70,7 +73,7 @@ public class ExpressionTree {
 		if (root != null) {
 			toPostfixNotation(root.getLeft());
 			toPostfixNotation(root.getRight());
-			performOperation(root.getValue());
+			performOperation(evalTree(root.getLeft()), evalTree(root.getRight()), root.getValue().toString());
 		}
 		return finalRoot.toString(); // look at thsi again lol
 	}
@@ -87,14 +90,14 @@ public class ExpressionTree {
 	}
 
 	private boolean isOperator(String s) {
-		return (s.equals("+") || s.equals("*"));
+		return (s.equals(ADDSIGN) || s.equals(MULTSIGN));
 	}
 
 	private int performOperation(int a, int b, String operator) {
 		switch (operator) {
-		case "*":
+		case MULTSIGN:
 			return a * b;
-		case "+":
+		case ADDSIGN:
 			return a + b;
 		default:
 			throw new IllegalArgumentException();
