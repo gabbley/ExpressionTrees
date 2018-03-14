@@ -30,6 +30,8 @@ public class ExpressionTree {
 				TreeNode operator = new TreeNode(postfix[i]);
 				operator.setRight(exp.pop());
 				operator.setLeft(exp.pop());
+				//exp.push(new TreeNode(performOperation(evalTree(operator.getLeft()), evalTree(operator.getRight()), (String)operator.getValue())));
+				exp.push(operator);
 			}
 		}
 
@@ -46,6 +48,8 @@ public class ExpressionTree {
 	 */
 	public int evalTree(TreeNode root) {
 		int evalNum = 0;
+		if (root == null)
+			System.out.println("root empty");
 		while (root != null) {
 			String rootString = root.getValue().toString();
 			if (isOperator(rootString))
