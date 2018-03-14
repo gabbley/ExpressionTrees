@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class ExpressionsTester {
 	
 	public static String filename;
-
+	final static String OUTPUT = "myAnswers.txt";
 
 	/**
 	 * Opens file for reading
@@ -75,14 +75,14 @@ public class ExpressionsTester {
 	 * @return PrintWriter
 	 * 	Object able to write to given file
 	 */
-	public static PrintWriter writeToFile(String filename) throws FileNotFoundException {
+	public static PrintWriter writeToFile(String file) throws FileNotFoundException {
 
-		File f = new File(filename);
+		File f = new File(file);
 		PrintWriter output = null;
 		try {
 			output = new PrintWriter(f);
 		} catch (FileNotFoundException e) {
-			PrintWriter out = new PrintWriter(filename);
+			PrintWriter out = new PrintWriter(file);
 			out.println("Unable to Open File");
 			return null;
 		}
@@ -105,19 +105,20 @@ public class ExpressionsTester {
 		PrintWriter out;
 
 		try {
-			out = writeToFile(filename);
+			out = writeToFile(OUTPUT);
 		} catch (FileNotFoundException e) {
-			out = new PrintWriter(new File(filename));
+			out = new PrintWriter(new File(OUTPUT));
 			e.printStackTrace();
 		}
 		
 		String[] arr = in.nextLine().split(" ");
 		TreeNode tree = test.buildTree(arr);
-		out.print("evalTree: " + test.evalTree(tree));
-		out.print("toInfixNotation: " + test.toInfixNotation(tree));
-		out.print("toPostfixNotation: " + test.toPostfixNotation(tree));
-		out.print("toPrefixNotation: " + test.toPrefixNotation(tree));
-		out.print("postfixEval: " + test.postfixEval(test.toPostfixNotation(tree).split(" ")));
+		System.out.print("testing!!!!");
+		System.out.print("evalTree: " + test.evalTree(tree));
+		System.out.print("toInfixNotation: " + test.toInfixNotation(tree));
+		System.out.print("toPostfixNotation: " + test.toPostfixNotation(tree));
+		System.out.print("toPrefixNotation: " + test.toPrefixNotation(tree));
+		System.out.print("postfixEval: " + test.postfixEval(test.toPostfixNotation(tree).split(" ")));
 	
 		out.close();
 	}
