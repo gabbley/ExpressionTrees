@@ -54,7 +54,7 @@ public class ExpressionsTester {
 		else{
 			//System.out.println(in.nextLine());
 			while (in.hasNextLine()){
-				System.out.println("Testing");
+				//System.out.println("Testing");
 				testTrees(in, new ExpressionTree());
 			}
 		}
@@ -113,13 +113,12 @@ public class ExpressionsTester {
 		
 		String[] arr = in.nextLine().split(" ");
 		TreeNode tree = test.buildTree(arr);
-		System.out.print("testing!!!!");
-		System.out.print("evalTree: " + test.evalTree(tree));
-		System.out.print("toInfixNotation: " + test.toInfixNotation(tree));
-		System.out.print("toPostfixNotation: " + test.toPostfixNotation(tree));
-		System.out.print("toPrefixNotation: " + test.toPrefixNotation(tree));
-		System.out.print("postfixEval: " + test.postfixEval(test.toPostfixNotation(tree).split(" ")));
-	
+		System.out.println("evalTree: " + test.evalTree(tree));
+		System.out.println("toInfixNotation: " + test.toInfixNotation(tree));
+		System.out.println("toPostfixNotation: " + test.toPostfixNotation(tree));
+		System.out.println("toPrefixNotation: " + test.toPrefixNotation(tree));
+		System.out.println("postfixEval: " + test.postfixEval(arr));
+		System.out.println("\n\n");
 		out.close();
 	}
 }
