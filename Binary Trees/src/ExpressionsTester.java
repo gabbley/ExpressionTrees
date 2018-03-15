@@ -37,8 +37,7 @@ public class ExpressionsTester {
 			filename = "postFixExpressions.txt";
 			if (openFile(filename) == null){
 				System.out.println("Please enter file name");
-				filename = kb.next();
-				
+				filename = kb.next();			
 			}
 
 			kb.close();
@@ -49,16 +48,27 @@ public class ExpressionsTester {
 		}
 
 		Scanner in = openFile(filename);
+		
+		PrintWriter output;
+
+		try {
+			output = writeToFile(OUTPUT);
+		} catch (FileNotFoundException e) {
+			output = new PrintWriter(new File(OUTPUT));
+			e.printStackTrace();
+		}
+		
 		if (in == null)
 			System.exit(1);
 		else{
 			//System.out.println(in.nextLine());
 			while (in.hasNextLine()){
 				//System.out.println("Testing");
-				testTrees(in, new ExpressionTree());
+				testTrees(in, output, new ExpressionTree());
 			}
 		}
-			
+		
+			output.close();
 			//System.out.println("haha");
 	}
 	
@@ -101,24 +111,19 @@ public class ExpressionsTester {
 	 * @throws FileNotFoundException
 	 * 	if file not found
 	 */
-	public static void testTrees(Scanner in, ExpressionTree test) throws FileNotFoundException{
-		PrintWriter out;
+	public static void testTrees(Scanner in, PrintWriter out, ExpressionTree test) throws FileNotFoundException{
 
-		try {
-			out = writeToFile(OUTPUT);
-		} catch (FileNotFoundException e) {
-			out = new PrintWriter(new File(OUTPUT));
-			e.printStackTrace();
-		}
 		
 		String[] arr = in.nextLine().split(" ");
 		TreeNode tree = test.buildTree(arr);
-		System.out.println("evalTree: " + test.evalTree(tree));
-		System.out.println("toInfixNotation: " + test.toInfixNotation(tree));
-		System.out.println("toPostfixNotation: " + test.toPostfixNotation(tree));
-		System.out.println("toPrefixNotation: " + test.toPrefixNotation(tree));
-		System.out.println("postfixEval: " + test.postfixEval(arr));
-		System.out.println("\n\n");
-		out.close();
+		out.println("evalTree: " + test.evalTree(tree));
+		out.println("evalTree: " + test.evalTree(tree));
+		out.println("toInfixNotation: " + test.toInfixNotation(tree));
+		out.println("toPostfixNotation: " + test.toPostfixNotation(tree));
+		out.println("toPrefixNotation: " + test.toPrefixNotation(tree));
+		out.println("postfixEval: " + test.postfixEval(arr));
+		out.println("\n\n");
+		
+
 	}
 }
