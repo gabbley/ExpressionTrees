@@ -61,15 +61,11 @@ public class ExpressionsTester {
 		if (in == null)
 			System.exit(1);
 		else{
-			//System.out.println(in.nextLine());
 			while (in.hasNextLine()){
-				//System.out.println("Testing");
 				testTrees(in, output, new ExpressionTree());
 			}
 		}
-		
 			output.close();
-			//System.out.println("haha");
 	}
 	
 
