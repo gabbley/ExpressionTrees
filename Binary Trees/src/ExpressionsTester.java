@@ -66,11 +66,10 @@ public class ExpressionsTester {
          while (in.hasNextLine()){
             String[] arr = in.nextLine().split(" ");
             ExpressionTree test = new ExpressionTree(arr);
-            TreeNode tree = test.buildTree(arr);
-            testTrees(tree, output, test, arr);
+            testTrees(output, test, arr);
          }
       }
-      output.close();
+     output.close();
    }
 
 	/**
@@ -93,8 +92,8 @@ public class ExpressionsTester {
          output = new PrintWriter(f);
       } 
       catch (FileNotFoundException e) {
-         PrintWriter out = new PrintWriter(file);
-         out.println("Unable to Open File");
+         output = new PrintWriter(file);
+         output.println("Unable to Open File");
          return null;
       }
       return output;
@@ -112,15 +111,14 @@ public class ExpressionsTester {
 	 * @throws FileNotFoundException
 	 * 	if file not found
 	 */
-   public static void testTrees(TreeNode tree, PrintWriter out, ExpressionTree test, String[] arr) throws FileNotFoundException{
+   public static void testTrees(PrintWriter out, ExpressionTree test, String[] arr) throws FileNotFoundException{
    
-      //TreeNode tree = test.buildTree(arr);
-      System.out.println("evalTree: " + test.evalTree(tree));
-      System.out.println("toInfixNotation: " + test.toInfixNotation(tree));
-      System.out.println("toPostfixNotation: " + test.toPostfixNotation(tree));
-      System.out.println("toPrefixNotation: " + test.toPrefixNotation(tree));
-      System.out.println("postfixEval: " + test.postfixEval(arr));
-      System.out.println("\n\n");
+      out.println("evalTree: " + test.evalTree());
+      out.println("toInfixNotation: " + test.toInfixNotation());
+      out.println("toPostfixNotation: " + test.toPostfixNotation());
+      out.println("toPrefixNotation: " + test.toPrefixNotation());
+      out.println("postfixEval: " + test.postfixEval(arr));
+      out.println("\n\n");
       out.close();
    
    }

@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Stack;
 
-public class ExpressionTree extends TreeNode {
+public class ExpressionTree extends TreeNode implements Expressions {
 
    final String MULTSIGN = "*";
    final String ADDSIGN = "+";
@@ -56,15 +56,25 @@ public class ExpressionTree extends TreeNode {
       if (root == null)
          return 0;
    
-      String rootString = root.getValue().toString();
-      if (isOperator(rootString))
-         evalNum = performOperation(evalTree(root.getLeft()), evalTree(root.getRight()), rootString);
-      else
-         evalNum = Integer.parseInt(rootString);
+      String rootString = (root.getValue().toString());
+      try{
+    	  evalNum = Integer.parseInt(root.getValue().toString());
+      }
+      catch(NumberFormatException ex){
+    	  evalNum = performOperation(evalTree(root.getLeft()), evalTree(root.getRight()), rootString);
+      }
+   
+    
+//      if (isOperator(rootString))
+//         evalNum = performOperation(evalTree(root.getLeft()), evalTree(root.getRight()), rootString);
+//      else
+//         evalNum = Integer.parseInt(rootString);
    
       return evalNum;
    
    }
+   
+
 
 	/**
 	 * Converts ExpressionTree to prefix notation
@@ -163,6 +173,10 @@ public class ExpressionTree extends TreeNode {
    private boolean isOperator(String s) {
       return (s.equals(ADDSIGN) || s.equals(MULTSIGN));
    }
+   
+   private int getOperand(String s){
+	   return Integer.parseInt(s);
+   }
 
 	/**
 	 * Performs specified operation
@@ -188,5 +202,45 @@ public class ExpressionTree extends TreeNode {
       }
    
    }
+
+	/**
+	 * Traverses through a tree and evaluates
+	 * 
+	 * @return int final value of the tree
+	 */
+	@Override
+	public int evalTree() {
+		return evalTree(this);
+	}
+
+	/**
+	 * Converts ExpressionTree to prefix notation
+	 * 
+	 * @return String Tree in prefix notation
+	 */
+	@Override
+	public String toPrefixNotation() {
+		return toPrefixNotation(this);
+	}
+
+	/**
+	 * Converts ExpressionTree to infix notation
+	 * 
+	 * @return String Tree in infix notation
+	 */
+	@Override
+	public String toInfixNotation() {
+		return toInfixNotation(this);
+	}
+
+	/**
+	 * Converts ExpressionTree to postfix notation
+	 * 
+	 * @return String Tree in postfix notation
+	 */
+	@Override
+	public String toPostfixNotation() {
+		return toPostfixNotation(this);
+	}
 
 }
